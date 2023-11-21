@@ -9,18 +9,22 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+dot_env = os.path.join(BASE_DIR, '.env')  # pragma: no cover
+load_dotenv(dotenv_path=dot_env)  # pragma: no cover
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-as=*!0a1x!9emc@pc9%8ldr$0+=*x@8yhuvyu33kx98p5874c-'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,11 +84,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test_django',
-        'USER': 'postgres',
-        'HOST': '127.0.0.1',  # Адрес, на котором развернут сервер БД
-        'PORT': 5432,  # Порт, на котором работает сервер БД
-        'PASSWORD': 454125,
+        'NAME': os.getenv("NAME_DB"),
+        'USER': os.getenv("USER_DB"),
+        'HOST': os.getenv("HOST_DB"),  # Адрес, на котором развернут сервер БД
+        'PORT': os.getenv("PORT_DB"),  # Порт, на котором работает сервер БД
+        'PASSWORD': os.getenv("DB_PASSWORD"),
     }
 }
 
